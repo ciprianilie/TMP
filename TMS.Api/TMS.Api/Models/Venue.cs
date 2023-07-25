@@ -5,7 +5,7 @@ namespace TMS.Api.Models;
 
 public partial class Venue
 {
-    public int VenueId { get; set; }
+    public long VenueId { get; set; }
 
     public string Location { get; set; } = null!;
 

@@ -38,7 +38,7 @@ namespace TMS.Api.Controllers
 
 
         [HttpGet]
-        public ActionResult<EventDto> GetById(int id)
+        public ActionResult<EventDto> GetById(long id)
         {
             var @event = _eventRepository.GetById(id);
 
@@ -52,8 +52,8 @@ namespace TMS.Api.Controllers
                 EventId = @event.EventId,
                 EventDescription = @event.EventDescription,
                 EventName = @event.EventName,
-                EventType = @event.EventType.EventTypeName ?? string.Empty,
-                Venue = @event.Venue.Location ?? string.Empty
+                EventType = @event.EventType?.EventTypeName ?? string.Empty,
+                Venue = @event.Venue?.Location ?? string.Empty
             };
 
             return Ok(dtoEvent);

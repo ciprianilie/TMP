@@ -5,13 +5,13 @@ namespace TMS.Api.Models;
 
 public partial class TicketCategory
 {
-    public int TicketCategoryId { get; set; }
+    public long TicketCategoryId { get; set; }
 
     public decimal Price { get; set; }
 
     public string Description { get; set; } = null!;
 
-    public int EventId { get; set; }
+    public long EventId { get; set; }
 
     public virtual Event Event { get; set; } = null!;
 

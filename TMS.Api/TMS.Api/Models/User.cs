@@ -5,7 +5,7 @@ namespace TMS.Api.Models;
 
 public partial class User
 {
-    public int CustomerId { get; set; }
+    public long CustomerId { get; set; }
 
     public string CustomerName { get; set; } = null!;
 
