@@ -18,9 +18,10 @@ namespace TMS.Api.Repositories
             throw new NotImplementedException();
         }
 
-        public int Delete(long id)
+        public void Delete(Event @event)
         {
-            throw new NotImplementedException();
+            _dbContext.Remove(@event);
+            _dbContext.SaveChanges();
         }
 
         public IEnumerable<Event> GetAll()
@@ -30,16 +31,17 @@ namespace TMS.Api.Repositories
             return events;
         }
 
-        public Event GetById(long id)
+        public async Task<Event> GetById(long id)
         {
-            var @event = _dbContext.Events.Where(e => e.EventId == id).FirstOrDefault();
+            var @event = await _dbContext.Events.Where(e => e.EventId == id).FirstOrDefaultAsync();
 
             return @event;
         }
 
         public void Update(Event @event)
         {
-            throw new NotImplementedException();
+            _dbContext.Entry(@event).State = EntityState.Modified;
+            _dbContext.SaveChanges();
         }
     }
 }

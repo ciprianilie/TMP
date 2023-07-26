@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TMS.Api.Models;
 using TMS.Api.Repositories;
+using TMS.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddTransient<IEventRepository, EventRepository>();
-
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

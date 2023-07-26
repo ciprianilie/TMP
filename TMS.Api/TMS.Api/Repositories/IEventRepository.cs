@@ -6,12 +6,12 @@ namespace TMS.Api.Repositories
     {
         IEnumerable<Event> GetAll();
 
-        Event GetById(long id);
+        Task<Event> GetById(long id);
 
         int Add(Event @event);
 
         void Update(Event @event);
 
-        int Delete(long id);
+        void Delete(Event @event);
     }
 }
