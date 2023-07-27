@@ -15,11 +15,13 @@ namespace TMS.Api.Controllers
     {
         private readonly IEventRepository _eventRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
 
-        public EventController(IEventRepository eventRepository, IMapper mapper)
+        public EventController(IEventRepository eventRepository, IMapper mapper, ILogger<EventController> logger)
         {
             _eventRepository = eventRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -36,7 +38,6 @@ namespace TMS.Api.Controllers
                 Venue = e.Venue?.Location ?? string.Empty
             });
 
-
             return Ok(dtoEvents);
         }
 
@@ -44,20 +45,17 @@ namespace TMS.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<EventDto>> GetById(long id)
         {
-            var @event = await _eventRepository.GetById(id);
+                var @event = await _eventRepository.GetById(id);
 
-            if (@event == null)
-            {
-                return NotFound();
-            }
+                var eventDto = _mapper.Map<EventDto>(@event);
 
-            var eventDto = _mapper.Map<EventDto>(@event);
-
-            return Ok(eventDto);
+                return Ok(eventDto);
         }
+
         [HttpPatch]
         public async Task<ActionResult<EventPatchDto>> Patch(EventPatchDto eventPatch)
         {
+            if(eventPatch == null) throw new ArgumentNullException(nameof(eventPatch));
             var eventEntity = await _eventRepository.GetById(eventPatch.EventId);
             if(eventEntity == null)
             {

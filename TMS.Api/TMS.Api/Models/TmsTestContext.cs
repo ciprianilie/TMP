@@ -28,7 +28,7 @@ public partial class TmsTestContext : DbContext
     public virtual DbSet<Venue> Venues { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=TMS_TEST;Integrated Security=True;TrustServerCertificate=True;encrypt=false;");
+        => optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=TMS;Integrated Security=True;TrustServerCertificate=True;encrypt=false;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

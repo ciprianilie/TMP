@@ -1,7 +1,10 @@
-using Microsoft.EntityFrameworkCore;
-using TMS.Api.Models;
+
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
+using NLog.Web;
+using TMS.Api.Middleware;
 using TMS.Api.Repositories;
-using TMS.Api.Services;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +14,10 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//Insert dependency injection for Logger
+builder.Logging.ClearProviders();
+builder.Host.UseNLog();
 
 builder.Services.AddTransient<IEventRepository, EventRepository>();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -23,7 +30,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+
+//app.UseHttpsRedirection();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseAuthorization();
 
